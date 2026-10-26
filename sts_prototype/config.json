@@ -1,0 +1,14 @@
+{
+  "lean_min": 25,
+  "sitting_tolerance": 10,
+  "straight_tolerance": 15,
+  "stand_progress": 0.9,
+  "seated_progress": 0.2,
+  "stable_speed": 0.08,
+  "hold_seconds": 0.3,
+  "speed_sd_multiplier": 3,
+  "speed_window": 0.2,
+  "sitting_window": 0.5,
+  "seated_evidence_max_age": 2.0,
+  "standing_window": 0.5
+}

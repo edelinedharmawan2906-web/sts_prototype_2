@@ -1,0 +1,23 @@
+{
+  "name": "sts-ta-camera",
+  "version": "0.8.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "dev": "vite --host 127.0.0.1",
+    "assets": "node prepare-assets.mjs"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "0.10.21",
+    "mqtt": "5.16.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "typescript": "5.8.3",
+    "vite": "6.3.5"
+  }
+}

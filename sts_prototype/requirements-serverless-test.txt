@@ -1,0 +1,4 @@
+# Local-only tests: AWS calls intercepted by moto; no AWS credentials needed.
+-r requirements-api.txt
+boto3>=1.35,<2
+moto[dynamodb]>=5,<6

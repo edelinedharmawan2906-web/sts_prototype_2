@@ -1,0 +1,24 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const ts=require('typescript'),Module=require('node:module'),React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
+(async()=>{
+ const elements=Object.fromEntries(['#status','#run','#download'].map(x=>[x,{textContent:'',disabled:false}]));
+ const source=fs.readFileSync('../connection_test.html','utf8').split('<script>')[1].split('</script>')[0];
+ const context=vm.createContext({document:{querySelector:x=>elements[x]},fetch:(p,o)=>fetch('http://127.0.0.1:8016'+p,o),console});
+ vm.runInContext(source,context);await elements['#run'].onclick();
+ assert.ok(elements['#status'].textContent.includes('Bangkit lengkap: 1'),elements['#status'].textContent);
+ assert.ok(elements['#status'].textContent.includes('Siklus: 1'));
+ assert.equal(elements['#download'].disabled,false);
+ const sid=vm.runInContext('sid',context);
+ const data=await (await fetch(`http://127.0.0.1:8016/history/${sid}`)).json();
+ assert.equal(data.data.assessment_mode,'personal_dummy_v1');
+ const compiled=ts.transpileModule(fs.readFileSync('src/AttemptResult.tsx','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
+ const m=new Module(__filename);m.filename=__filename;m.paths=module.paths;m._compile(compiled,__filename);
+ const component=m.exports.AttemptResult;
+ const personal=renderToStaticMarkup(React.createElement(component,{attempt:data.data.attempts[0]}));
+ assert.match(personal,/Acuan berdiri pribadi tercapai/);assert.match(personal,/Tambahan/);assert.doesNotMatch(personal,/15% panjang torso/);
+ const old=JSON.parse(fs.readFileSync('/workspace/scratch/4aaca6738f98/upload/sts-camera-c12d412fef4c4773a55f43d0200a75f1.json'));
+ const legacy=renderToStaticMarkup(React.createElement(component,{attempt:old.attempts[0]}));
+ assert.match(legacy,/aturan versi lama/);assert.match(legacy,/Posisi kaki awal melewati batas prototipe/);
+ fs.writeFileSync('../verification-session-id.txt',sid);
+ console.log('Browser simulation code → live API → personal engine → SQLite: 1 rise / 1 cycle. React result rendering: personal and legacy modes correct.');
+})().catch(e=>{console.error(e);process.exit(1)});

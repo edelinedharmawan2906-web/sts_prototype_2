@@ -1,0 +1,6 @@
+MediaPipe Tasks Vision 0.10.21
+Source: https://github.com/google-ai-edge/mediapipe
+License: Apache License 2.0
+https://www.apache.org/licenses/LICENSE-2.0
+Model source and SHA-256: frontend/dist/mediapipe/SOURCE.json
+Original copyright/license comments retained in bundled MediaPipe assets.

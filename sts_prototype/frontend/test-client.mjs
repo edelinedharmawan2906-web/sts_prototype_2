@@ -1,0 +1,23 @@
+import ts from 'typescript';
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const code=ts.transpileModule(await readFile('src/sts-client.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
+const {StsClient}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+const log=[];let inFlight=0,peak=0;
+globalThis.fetch=async(url,options)=>{
+ inFlight++;peak=Math.max(peak,inFlight);
+ await new Promise(resolve=>setTimeout(resolve,2));
+ log.push({url,method:options.method,body:options.body?JSON.parse(options.body):undefined});
+ inFlight--;
+ return {ok:true,json:async()=>url==='/sessions'?{session_id:'test'}:{complete:1,cycles:1}};
+};
+const client=new StsClient();await client.create(640,480);
+await Promise.all([client.calibrate('duduk',10),client.frame(.1,null)]);
+assert.equal(peak,1);assert.equal(log[0].body.input_source,'browser_camera');
+assert.equal(log[1].url,'/sessions/test/calibration');assert.equal(log[2].body.landmarks,null);
+assert.equal(log[2].body.t,.1);
+globalThis.fetch=async()=>({ok:false,status:409,text:async()=>'Timestamp salah'});
+await assert.rejects(client.frame(.1,null),/409/);
+globalThis.fetch=async()=>({ok:true,json:async()=>({complete:1})});
+assert.equal((await client.finish()).complete,1);
+console.log('Client tests passed: source label, ordered HTTP, missing pose, errors and recovery.');
