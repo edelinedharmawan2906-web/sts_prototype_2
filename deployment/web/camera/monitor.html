@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12695f"><meta name="referrer" content="no-referrer">
+<title>Monitor cloud · Gerak STS</title>
+<link rel="stylesheet" href="./monitor.css">
+<script src="./vendor/mqtt.min.js" defer></script><script type="module" src="./monitor.mjs?v=3"></script>
+</head><body>
+<header><a class="brand" href="/camera/">Gerak STS <span>MONITOR CLOUD</span></a><a href="/camera/">Buka kamera ↗</a></header>
+<main>
+<section class="intro"><p class="eyebrow">PANTAU LATIHAN DARI PERANGKAT LAIN</p><h1>Gerakan di laptop.<br>Hasilnya di sini.</h1><p>Gunakan akun latihan yang sama di laptop dan HP. Monitor menerima hasil analisis melalui MQTT cloud.</p></section>
+<section class="panel" aria-labelledby="choose"><div class="section-head"><h2 id="choose">Pilih sesi latihan</h2><span id="auth-badge" class="badge">Memeriksa login</span></div>
+<div class="login-row"><button id="login" class="secondary">Login AWS</button><button id="logout" class="text-button">Hapus login tab</button></div>
+<label for="sessions">Sesi dari akunmu</label><div class="session-row"><select id="sessions"><option value="">Muat daftar sesi terlebih dahulu</option></select><button id="refresh" class="secondary">Muat sesi</button></div>
+<button id="more" class="text-button" hidden>Muat sesi berikutnya</button>
+<details><summary>Punya ID sesi? Masukkan manual</summary><label for="session-id">ID sesi kamera</label><input id="session-id" maxlength="64" autocomplete="off" spellcheck="false" placeholder="Contoh: 62b8079af8be66af58b5c4d39cec6ddd"></details>
+<div class="actions"><button id="connect">Hubungkan monitor</button><button id="disconnect" class="secondary" disabled>Putuskan</button></div>
+<p id="notice" role="status" aria-live="polite">Login, lalu pilih sesi yang ingin dipantau.</p>
+</section>
+<section class="results" aria-label="Hasil sesi"><div class="live-head"><span id="connection" class="connection" data-state="idle">Belum terhubung</span><span id="updated">Belum ada data</span></div>
+<p id="selected-id" class="session-id">Belum memilih sesi</p>
+<div class="cards"><article><span>Percobaan</span><strong id="attempts">—</strong><small>Termasuk bangkit yang belum lengkap</small></article><article><span>Bangkit lengkap</span><strong id="complete">—</strong><small>Sudah mencapai target berdiri pribadi</small></article><article><span>Siklus selesai</span><strong id="cycles">—</strong><small>Bangkit lengkap lalu kembali duduk</small></article></div>
+<section class="panel movement"><div class="section-head"><h2 id="phase">Menunggu data</h2><span id="closed" class="badge">—</span></div><p id="movement-message">Mulai latihan di halaman kamera pada laptop.</p>
+<div class="angles"><div><span>Lutut</span><strong id="knee">—</strong></div><div><span>Badan–paha</span><strong id="hip">—</strong></div><div><span>Condong badan</span><strong id="lean">—</strong></div></div><p id="quality" class="muted">Sudut ditampilkan jika posisi tubuh terbaca.</p></section>
+<section class="panel"><h2>Geometri dan LSTM</h2><p id="lstm-status">Menunggu hasil LSTM</p>
+<table style="width:100%;text-align:left"><thead><tr><th>Lutut</th><th>Geometri 2D</th><th>LSTM</th></tr></thead><tbody><tr><th>Kiri</th><td id="geo-left">—</td><td id="lstm-left">—</td></tr><tr><th>Kanan</th><td id="geo-right">—</td><td id="lstm-right">—</td></tr></tbody></table>
+<p class="muted">Sudut tekuk: 0° saat lurus. Hasil pembanding pada waktu akhir window yang sama. Hitungan STS tetap memakai geometri dan acuan pribadi. Tanda — berarti data atau visibility sisi tubuh belum cukup.</p></section>
+<p class="footnote" id="source">Data tersimpan di cloud; monitor ini hanya menerima hasil.</p>
+</section>
+<footer>Prototipe pembelajaran IIPP · Aturan kalibrasi pribadi masih berupa asumsi teknis.</footer>
+</main></body></html>

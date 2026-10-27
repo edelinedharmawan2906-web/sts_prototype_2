@@ -1,0 +1,22 @@
+{
+  "calibration_seconds": 2.0,
+  "calibration_min_samples": 20,
+  "calibration_max_y_range": 0.03,
+  "calibration_max_angle_range": 10.0,
+  "calibration_max_ankle_range": 0.1,
+  "calibration_min_rise": 0.08,
+  "calibration_min_extension": 10.0,
+  "sitting_angle_tolerance": 10.0,
+  "sitting_ankle_tolerance": 0.1,
+  "seated_anchor_tolerance": 20.0,
+  "standing_angle_tolerance": 10.0,
+  "lean_addition": 10.0,
+  "preparation_lean_delta": 5.0,
+  "min_rise_speed": 0.01,
+  "stand_progress": 0.9,
+  "seated_progress": 0.2,
+  "stable_speed": 0.08,
+  "hold_seconds": 0.3,
+  "sitting_capture_angle_range": 10,
+  "sitting_capture_ankle_range": 0.1
+}

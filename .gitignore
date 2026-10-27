@@ -23,3 +23,6 @@ node_modules/
 
 # Logs
 *.log
+
+# File sementara unduhan MediaPipe
+deployment/web/camera/mediapipe/wasm/.vision_wasm*

@@ -1,0 +1,3 @@
+model,ukuran_KB,MAE_lutut_kanan_deg,MAE_lutut_kiri_deg,rata_selisih_vs_Keras_deg,maks_selisih_vs_Keras_deg
+model_fp32.tflite,296.0078125,13.351866482382789,14.239988545404723,2.8262268e-06,1.5258789e-05
+model_quantized.tflite,146.5703125,13.364703541816185,14.237924464264255,0.13257599,0.37795448
