@@ -1,0 +1,5 @@
+numpy==2.2.6
+fastapi==0.161.1
+pydantic==2.14.1
+boto3==1.43.118
+ai-edge-litert==2.3.0
